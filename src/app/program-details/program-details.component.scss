@@ -1,0 +1,32 @@
+.cp_program_details{
+    margin: 20px 0;
+
+    & .cp_program_img{
+        height: 350px;
+        overflow: hidden;
+        & img{
+            width: 100%;
+        }
+    }
+    & div.descrp{
+        margin: 10px 0;
+        color: #777;
+    }
+    & label{
+        display: block;
+        font-weight: 600;
+        margin: 0 0 8px;
+        padding: 0;
+    }
+    & .booking_dates_drp{
+        padding: 8px 10px;
+        min-width: 200px;
+    }
+}
+@media(max-width: 767px){
+    .cp_program_details{    
+        & .cp_program_img{
+            height: auto;
+        }
+    }
+}

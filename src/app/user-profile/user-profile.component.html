@@ -1,0 +1,482 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+    <li aria-current="page" class="breadcrumb-item active">Profile</li>
+  </ol>
+</nav>
+<section *ngIf="!isPageLoading" [style.minHeight]="wrapperHeight+'px'">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="cp_profile_overview">
+          <div class="row">
+            <div class="col-md-5">
+              <div class="cp_profile_pic">
+                <a id="change-profile-pic" type="button" (click)="openProfilePicPopup(changeProfilePicPopup)"><i
+                    class="fa fa-edit"></i></a>
+                <img id="profile_picture" src="{{userobj.pic}}" alt="{{profileObj.name}}">
+              </div>
+            </div>
+            <div class="col-md-7">
+              <div class="cp_profile_summary"><i class="fa fa-edit" (click)="open(content)" id="update-profile"></i>
+                <h3>{{profileObj.name}}</h3>
+                <p>{{profileObj.headline}}</p>
+                <p><span *ngFor="let spec of profileObj.services">{{spec}}</span></p>
+                <p><i class="fa fa-envelope"></i> {{profileObj.email}}</p>
+                <p><i class="fa fa-phone"></i> {{profileObj.contact}}</p>
+                <p style="margin-top: 5px"><b>Linkedin Profile</b><br>{{profileObj.lpUrl}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="aboutYourself">
+          <h3>About Yourself <i class="fa fa-edit" (click)="showAboutEdit()"></i></h3>
+          <p *ngIf="!showAboutEditForm" [innerHtml]="profileObj.about"></p>
+          <form *ngIf="showAboutEditForm" [formGroup]="aboutYourselfForm" (ngSubmit)="aboutFormSubmit()">
+            <div class="form-group">
+              <ck-editor formControlName="description" skin="moono-lisa" language="en" [fullPage]="true"
+                [ngClass]="{ 'is-invalid': aboutFormSubmitted && abf.description.errors }"></ck-editor>
+              <div *ngIf="aboutFormSubmitted && abf.description.errors" class="invalid-feedback">
+                <div *ngIf="abf.description.errors.required">About Yourself is required</div>
+              </div>
+            </div>
+            <div class="form-group"><button type="submit" class="btn btn-primary"
+                [disabled]="isUpdateAboutProcess">Update<span *ngIf="isUpdateAboutProcess">...</span></button>
+            </div>
+          </form>
+        </div>
+        <div *ngIf="userobj && userobj.role==1" class="experience">
+          <i class="fa fa-plus" (click)="openAddExpPop(experience)"></i>
+          <h4>Experience</h4>
+          <div class="row" *ngFor="let experience of profileObj.experience; let i = index"
+            [ngClass]="profileObj.experience.length==i+1 ? 'last' : ''">
+            <div class="col-md-2">
+              <img src="./assets/images/2018-10-04_1.png" class="w-100">
+            </div>
+            <div class="col-md-10">
+              <i class="fa fa-trash text-danger" (click)="deleteExperience(experience.id)"></i>
+              <i class="fa fa-pencil"></i>
+              <h5>{{experience.title}}</h5>
+              <p><b>{{experience.company}}</b></p>
+              <p>{{experience.fromMonth}} {{experience.fromYear}} - <span
+                  *ngIf="experience.toMonth==''">Present</span><span
+                  *ngIf="experience.toMonth!=''">{{experience.toMonth}} {{experience.toYear}}</span></p>
+              <p>{{experience.location}}</p>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="userobj && userobj.role==1" class="experience mb-30">
+          <i class="fa fa-plus" (click)="openAddEduPop(education)"></i>
+          <h4>Education</h4>
+          <div class="row" *ngFor="let education of profileObj.education; let i = index"
+            [ngClass]="profileObj.education.length==i+1 ? 'last' : ''">
+            <div class="col-md-2">
+              <img src="./assets/images/2018-10-04_1.png" class="w-100">
+            </div>
+            <div class="col-md-10">
+              <i class="fa fa-trash text-danger" (click)="deleteEducation(education.id)"></i>
+              <i class="fa fa-pencil"></i>
+              <h5>{{education.school}}</h5>
+              <p><b>{{education.degree}}</b></p>
+              <p>{{education.fromYear}} - {{education.toYear}}</p>
+              <p>{{education.location}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <app-user-page-side-bar></app-user-page-side-bar>
+      </div>
+    </div>
+  </div>
+</section>
+<ng-template #content let-modal>
+  <form [formGroup]="updateProfileForm" (ngSubmit)="updateProfileSubmit()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Update Profile</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-6">
+            <input class="form-control" formControlName="fname" placeholder="First Name" type="text"
+              [ngClass]="{ 'is-invalid': updateProfileSubmitted && upf.fname.errors }">
+            <div *ngIf="updateProfileSubmitted && upf.fname.errors" class="invalid-feedback">
+              <div *ngIf="upf.fname.errors.required">First Name is required</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <input class="form-control" formControlName="lname" placeholder="Last Name" type="text"
+              [ngClass]="{ 'is-invalid': updateProfileSubmitted && upf.lname.errors }">
+            <div *ngIf="updateProfileSubmitted && upf.lname.errors" class="invalid-feedback">
+              <div *ngIf="upf.lname.errors.required">Last Name is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input class="form-control" formControlName="headline" placeholder="Headline (Limit 200 Characters)" type="text"
+          [ngClass]="{ 'is-invalid': updateProfileSubmitted && upf.headline.errors }">
+        <div *ngIf="updateProfileSubmitted && upf.headline.errors" class="invalid-feedback">
+          <div *ngIf="upf.headline.errors.required">Headline is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input class="form-control" formControlName="lpUrl" placeholder="Linkedin Profile URL" type="text"
+          [ngClass]="{ 'is-invalid': updateProfileSubmitted && upf.lpUrl.errors }">
+        <div *ngIf="updateProfileSubmitted && upf.lpUrl.errors" class="invalid-feedback">
+          <div *ngIf="upf.lpUrl.errors.required">Linkedin Profile URL is required</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" [disabled]="isUpdateProfileProcess" class="btn btn-primary">Update Profile<span
+          *ngIf="isUpdateProfileProcess">...</span></button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #experience let-modal>
+  <form [formGroup]="addExperienceForm" (ngSubmit)="addExperienceSubmit()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Experience</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Title</label>
+        <input class="form-control" formControlName="title" placeholder="Ex: Manager" type="text"
+          [ngClass]="{ 'is-invalid': addExperienceSubmitted && aexf.title.errors }">
+        <div *ngIf="addExperienceSubmitted && aexf.title.errors" class="invalid-feedback">
+          <div *ngIf="aexf.title.errors.required">Title is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Company</label>
+        <input class="form-control" formControlName="company" placeholder="Ex: Microsoft" type="text"
+          [ngClass]="{ 'is-invalid': addExperienceSubmitted && aexf.company.errors }">
+        <div *ngIf="addExperienceSubmitted && aexf.company.errors" class="invalid-feedback">
+          <div *ngIf="aexf.company.errors.required">Company is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Location</label>
+        <input class="form-control" formControlName="location" placeholder="Ex: Gurgaon, Haryana" type="text"
+          [ngClass]="{ 'is-invalid': addExperienceSubmitted && aexf.location.errors }">
+        <div *ngIf="addExperienceSubmitted && aexf.location.errors" class="invalid-feedback">
+          <div *ngIf="aexf.location.errors.required">Location is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-6">
+            <label>From</label>
+            <div class="form-group">
+              <select formControlName="fromMonth" class="form-control input-sm"
+                [ngClass]="{ 'is-invalid': addExperienceSubmitted && aexf.fromMonth.errors }">
+                <option value="">Month</option>
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+              </select>
+              <div *ngIf="addExperienceSubmitted && aexf.fromMonth.errors" class="invalid-feedback">
+                <div *ngIf="aexf.fromMonth.errors.required">From Month is required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <select formControlName="fromYear" class="form-control input-sm"
+                [ngClass]="{ 'is-invalid': addExperienceSubmitted && aexf.fromYear.errors }">
+                <option value="">Year</option>
+                <option value="2019">2019</option>
+                <option value="2018">2018</option>
+                <option value="2017">2017</option>
+                <option value="2016">2016</option>
+                <option value="2015">2015</option>
+                <option value="2014">2014</option>
+                <option value="2013">2013</option>
+                <option value="2012">2012</option>
+                <option value="2011">2011</option>
+                <option value="2010">2010</option>
+                <option value="2009">2009</option>
+                <option value="2008">2008</option>
+                <option value="2007">2007</option>
+                <option value="2006">2006</option>
+                <option value="2005">2005</option>
+                <option value="2004">2004</option>
+                <option value="2003">2003</option>
+                <option value="2002">2002</option>
+                <option value="2001">2001</option>
+                <option value="2000">2000</option>
+              </select>
+              <div *ngIf="addExperienceSubmitted && aexf.fromYear.errors" class="invalid-feedback">
+                <div *ngIf="aexf.fromYear.errors.required">From Year is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div *ngIf="showWorkToOpt">
+              <label>To</label>
+              <div class="form-group">
+                <select formControlName="toMonth" class="form-control input-sm"
+                  [ngClass]="{ 'is-invalid': addExperienceSubmitted && aexf.toMonth.errors }">
+                  <option value="">Month</option>
+                  <option value="January">January</option>
+                  <option value="February">February</option>
+                  <option value="March">March</option>
+                  <option value="April">April</option>
+                  <option value="May">May</option>
+                  <option value="June">June</option>
+                  <option value="July">July</option>
+                  <option value="August">August</option>
+                  <option value="September">September</option>
+                  <option value="October">October</option>
+                  <option value="November">November</option>
+                  <option value="December">December</option>
+                </select>
+                <div *ngIf="addExperienceSubmitted && aexf.toMonth.errors" class="invalid-feedback">
+                  <div *ngIf="aexf.toMonth.errors.required">To Month is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <select formControlName="toYear" class="form-control input-sm"
+                  [ngClass]="{ 'is-invalid': addExperienceSubmitted && aexf.toYear.errors }">
+                  <option value="">Year</option>
+                  <option value="2025">2025</option>
+                  <option value="2024">2024</option>
+                  <option value="2023">2023</option>
+                  <option value="2022">2022</option>
+                  <option value="2021">2021</option>
+                  <option value="2020">2020</option>
+                  <option value="2019">2019</option>
+                  <option value="2018">2018</option>
+                  <option value="2017">2017</option>
+                  <option value="2016">2016</option>
+                  <option value="2015">2015</option>
+                  <option value="2014">2014</option>
+                  <option value="2013">2013</option>
+                  <option value="2012">2012</option>
+                  <option value="2011">2011</option>
+                  <option value="2010">2010</option>
+                  <option value="2009">2009</option>
+                  <option value="2008">2008</option>
+                  <option value="2007">2007</option>
+                  <option value="2006">2006</option>
+                  <option value="2005">2005</option>
+                  <option value="2004">2004</option>
+                  <option value="2003">2003</option>
+                  <option value="2002">2002</option>
+                  <option value="2001">2001</option>
+                  <option value="2000">2000</option>
+                </select>
+                <div *ngIf="addExperienceSubmitted && aexf.toYear.errors" class="invalid-feedback">
+                  <div *ngIf="aexf.toYear.errors.required">To Year is required</div>
+                </div>
+              </div>
+
+            </div>
+            <h4 *ngIf="!showWorkToOpt" class="text-center mt-50">Present</h4>
+          </div>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" formControlName="workOption"> I currently work here
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" [disabled]="isAddExperienceProcess" class="btn btn-primary">Submit<span
+          *ngIf="isAddExperienceProcess">...</span></button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #education let-modal>
+  <form [formGroup]="addEducationForm" (ngSubmit)="addEducationSubmit()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Education</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>School/College</label>
+        <input class="form-control" formControlName="college" placeholder="Ex: Delhi University" type="text"
+          [ngClass]="{ 'is-invalid': addEducationSubmitted && aedf.college.errors }">
+        <div *ngIf="addEducationSubmitted && aedf.college.errors" class="invalid-feedback">
+          <div *ngIf="aedf.college.errors.required">School/College is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Degree</label>
+        <input class="form-control" formControlName="degree" placeholder="Ex: MCA" type="text"
+          [ngClass]="{ 'is-invalid': addEducationSubmitted && aedf.degree.errors }">
+        <div *ngIf="addEducationSubmitted && aedf.degree.errors" class="invalid-feedback">
+          <div *ngIf="aedf.degree.errors.required">Degree is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Grade/Percentage</label>
+        <input class="form-control" formControlName="grade" placeholder="Ex: A/80" type="text"
+          [ngClass]="{ 'is-invalid': addEducationSubmitted && aedf.grade.errors }">
+        <div *ngIf="addEducationSubmitted && aedf.grade.errors" class="invalid-feedback">
+          <div *ngIf="aedf.grade.errors.required">Grade/Percentage is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Location</label>
+        <input class="form-control" formControlName="location" placeholder="Ex: Gurgaon, Haryana" type="text"
+          [ngClass]="{ 'is-invalid': addEducationSubmitted && aedf.location.errors }">
+        <div *ngIf="addEducationSubmitted && aedf.location.errors" class="invalid-feedback">
+          <div *ngIf="aedf.location.errors.required">Location is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-6">
+            <label>From Year</label>
+            <select formControlName="fromYear" class="form-control input-sm"
+              [ngClass]="{ 'is-invalid': addEducationSubmitted && aedf.fromYear.errors }">
+              <option value="">Year</option>
+              <option value="1975">1975</option>
+              <option value="1976">1976</option>
+              <option value="1977">1977</option>
+              <option value="1978">1978</option>
+              <option value="1979">1979</option>
+              <option value="1980">1980</option>
+              <option value="1981">1981</option>
+              <option value="1982">1982</option>
+              <option value="1983">1983</option>
+              <option value="1984">1984</option>
+              <option value="1985">1985</option>
+              <option value="1986">1986</option>
+              <option value="1987">1987</option>
+              <option value="1988">1988</option>
+              <option value="1989">1989</option>
+              <option value="1990">1990</option>
+              <option value="1991">1991</option>
+              <option value="1992">1992</option>
+              <option value="1993">1993</option>
+              <option value="1994">1994</option>
+              <option value="1995">1995</option>
+              <option value="1996">1996</option>
+              <option value="1997">1997</option>
+              <option value="1998">1998</option>
+              <option value="1999">1999</option>
+              <option value="2000">2000</option>
+              <option value="2001">2001</option>
+              <option value="2002">2002</option>
+              <option value="2003">2003</option>
+              <option value="2004">2004</option>
+              <option value="2005">2005</option>
+              <option value="2006">2006</option>
+              <option value="2007">2007</option>
+              <option value="2008">2008</option>
+              <option value="2009">2009</option>
+              <option value="2010">2010</option>
+              <option value="2011">2011</option>
+              <option value="2012">2012</option>
+              <option value="2013">2013</option>
+              <option value="2014">2014</option>
+              <option value="2015">2015</option>
+              <option value="2016">2016</option>
+              <option value="2017">2017</option>
+              <option value="2018">2018</option>
+              <option value="2019">2019</option>
+              <option value="2020">2020</option>
+              <option value="2021">2021</option>
+              <option value="2022">2022</option>
+              <option value="2023">2023</option>
+              <option value="2024">2024</option>
+            </select>
+            <div *ngIf="addEducationSubmitted && aedf.fromYear.errors" class="invalid-feedback">
+              <div *ngIf="aedf.fromYear.errors.required">From Year is required</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div>
+              <label>To Year (or expected)</label>
+              <select formControlName="toYear" class="form-control input-sm"
+                [ngClass]="{ 'is-invalid': addEducationSubmitted && aedf.toYear.errors }">
+                <option value="">Year</option>
+                <option value="1975">1975</option>
+                <option value="1976">1976</option>
+                <option value="1977">1977</option>
+                <option value="1978">1978</option>
+                <option value="1979">1979</option>
+                <option value="1980">1980</option>
+                <option value="1981">1981</option>
+                <option value="1982">1982</option>
+                <option value="1983">1983</option>
+                <option value="1984">1984</option>
+                <option value="1985">1985</option>
+                <option value="1986">1986</option>
+                <option value="1987">1987</option>
+                <option value="1988">1988</option>
+                <option value="1989">1989</option>
+                <option value="1990">1990</option>
+                <option value="1991">1991</option>
+                <option value="1992">1992</option>
+                <option value="1993">1993</option>
+                <option value="1994">1994</option>
+                <option value="1995">1995</option>
+                <option value="1996">1996</option>
+                <option value="1997">1997</option>
+                <option value="1998">1998</option>
+                <option value="1999">1999</option>
+                <option value="2000">2000</option>
+                <option value="2001">2001</option>
+                <option value="2002">2002</option>
+                <option value="2003">2003</option>
+                <option value="2004">2004</option>
+                <option value="2005">2005</option>
+                <option value="2006">2006</option>
+                <option value="2007">2007</option>
+                <option value="2008">2008</option>
+                <option value="2009">2009</option>
+                <option value="2010">2010</option>
+                <option value="2011">2011</option>
+                <option value="2012">2012</option>
+                <option value="2013">2013</option>
+                <option value="2014">2014</option>
+                <option value="2015">2015</option>
+                <option value="2016">2016</option>
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+              </select>
+              <div *ngIf="addEducationSubmitted && aedf.toYear.errors" class="invalid-feedback">
+                <div *ngIf="aedf.toYear.errors.required">To Year is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" [disabled]="isAddEducationProcess" class="btn btn-primary">Submit<span
+          *ngIf="isAddEducationProcess">...</span></button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #changeProfilePicPopup let-modal>
+  <app-update-profile-pic></app-update-profile-pic>
+</ng-template>

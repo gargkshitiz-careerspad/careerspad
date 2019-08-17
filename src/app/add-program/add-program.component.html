@@ -1,0 +1,153 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+    <li aria-current="page" class="breadcrumb-item active">Add Program</li>
+  </ol>
+</nav>
+<section *ngIf="!isPageLoading">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div *ngIf="!showProgramPreview" class="cp_login">
+          <h4>Add Program</h4>
+          <form [formGroup]="addProgramForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <select class="form-control" formControlName="catg"
+                [ngClass]="{ 'is-invalid': submitted && f.catg.errors }" (change)="loadImages()">
+                <option value="">Select Program Category</option>
+                <option *ngFor="let spec of specArr" value="{{spec.id}}">{{spec.catg_name}}</option>
+              </select>
+              <div *ngIf="submitted && f.catg.errors" class="invalid-feedback">
+                <div *ngIf="f.catg.errors.required">Category is required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input class="form-control" formControlName="title" placeholder="Title" type="text"
+                [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
+              <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                <div *ngIf="f.title.errors.required">Title is required</div>
+              </div>
+            </div>
+            <div class="form-group"><input class="form-control" formControlName="tagLine"
+                placeholder="Tag Line (Limit 180 Characters)" type="text"
+                [ngClass]="{ 'is-invalid': submitted && f.tagLine.errors }">
+              <div *ngIf="submitted && f.tagLine.errors" class="invalid-feedback">
+                <div *ngIf="f.tagLine.errors.required">Tag Line is required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <ck-editor formControlName="description" skin="moono-lisa" language="en" [fullPage]="true"></ck-editor>
+              <div *ngIf="showDescErr" class="cp_error_msg">Program Description is required</div>
+            </div>
+            <div formArrayName="dates" *ngFor="let dates of addProgramForm.get('dates').controls; let i = index"
+              class="form-group">
+              <div [formGroupName]="i">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <input class="form-control" formControlName="fromDate" ngbDatepicker #fd="ngbDatepicker"
+                        placeholder="Day {{i+1}} Date" type="text" [minDate]="minFromDate" (click)="fd.toggle()"
+                        [ngClass]="{ 'is-invalid': submitted && dates.controls.fromDate.errors }">
+                      <div *ngIf="submitted && dates.controls.fromDate.errors" class="invalid-feedback">
+                        <div *ngIf="dates.controls.fromDate.errors.required">Date is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <!--<div class="input-group">
+                          <input class="form-control" formControlName="toDate" ngbDatepicker #td="ngbDatepicker"
+                            placeholder="To Date" type="text" [minDate]="minToDate" (focus)="minDateForToDate()"
+                            (click)="td.toggle()" [ngClass]="{ 'is-invalid': submitted && f.toDate.errors }">
+                          <div *ngIf="submitted && f.toDate.errors" class="invalid-feedback">
+                            <div *ngIf="f.toDate.errors.required">To Date is required</div>
+                          </div>
+                        </div>-->
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-md-6">
+                    <ngb-timepicker formControlName="fromTime" [meridian]="meridian"></ngb-timepicker>
+                  </div>
+                  <div class="col-md-6">
+                    <ngb-timepicker formControlName="toTime" [meridian]="meridian"></ngb-timepicker>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <a class="text-success" (click)="addButtonClick()">Add Day</a>
+            </div>
+            <div class="form-group"><input class="form-control" formControlName="noOfSeats" placeholder="No of Seats"
+                type="text" [ngClass]="{ 'is-invalid': submitted && f.noOfSeats.errors }">
+              <div *ngIf="submitted && f.noOfSeats.errors" class="invalid-feedback">
+                <div *ngIf="f.noOfSeats.errors.required">No of Seats is required</div>
+              </div>
+            </div>
+            <div class="form-group"><input class="form-control" formControlName="price" placeholder="Price" type="text">
+            </div>
+            <div class="form-group">
+              <select class="form-control" formControlName="eventMode" name="eventMode"
+                [ngClass]="{ 'is-invalid': submitted && f.eventMode.errors }">
+                <option value="">Select Event Mode</option>
+                <option value="Virtual/WebBased">Virtual/Web Based</option>
+                <option value="In-person/Classroom">In-person/Classroom</option>
+              </select>
+              <div *ngIf="submitted && f.eventMode.errors" class="invalid-feedback">
+                <div *ngIf="f.eventMode.errors.required">Event Mode is required</div>
+              </div>
+            </div>
+            <div *ngIf="showOnlineNote" class="form-group">
+              <p><b>Note:</b> We will send you program link after the approved
+                your program.</p>
+            </div>
+            <div *ngIf="showOfflineAddressField">
+              <div class="form-group"><input class="form-control" formControlName="city" name="city" placeholder="City"
+                  type="text" [ngClass]="{ 'is-invalid': submitted && f.city.errors }">
+                <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                  <div *ngIf="f.city.errors.required">City is required</div>
+                </div>
+              </div>
+              <div class="form-group"><input class="form-control" formControlName="address" name="address"
+                  placeholder="Address" type="text" [ngClass]="{ 'is-invalid': submitted && f.address.errors }">
+                <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                  <div *ngIf="f.address.errors.required">Address is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label (click)="showImages()">Click here to Select Image</label>
+              <div class="cp_media_box" *ngIf="showHideImages">
+                <div class="row">
+                  <div class="col-md-3" *ngFor="let img of imgArr">
+                    <img src="./assets/images/media/{{img.img}}" (click)="selectImage(img.img)" class="w-100" />
+                  </div>
+                </div>
+              </div>
+              <div class="uploadImg" *ngIf="selectedImgShow">
+                <div class="row">
+                  <div class="col-md-3"><img alt="" class="w-100" src="./assets/images/media/{{selectedImgName}}"></div>
+                </div>
+              </div>
+              <div *ngIf="showImgErr" class="cp_error_msg">Image is required</div>
+            </div>
+            <div class="form-group"><button type="submit" class="btn btn-primary">Preview</button>
+            </div>
+          </form>
+        </div>
+        <div *ngIf="showProgramPreview" class="row">
+          <div class="col-md-6">
+            <app-program-tile [program]="previewProgramObj" [preview]="true"></app-program-tile>
+            <div class="form-group">
+              <button type="button" (click)="addProgram()" class="btn btn-primary" [disabled]="isAddProgramProcess">Add
+                Program<span *ngIf="isAddProgramProcess">...</span></button>&nbsp;&nbsp;&nbsp;
+              <button type="button" class="btn btn-warning" (click)="editProgram()">Edit Program</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <app-user-page-side-bar></app-user-page-side-bar>
+      </div>
+    </div>
+  </div>
+</section>

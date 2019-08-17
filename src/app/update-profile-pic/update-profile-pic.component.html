@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Update Profile Pic</h4>
+  <button type="button" class="close" aria-label="Close" (click)="modalDismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <input type="file" #uploadImage accept='image/*' (change)="fileChangeEvent($event)" />
+  <span class="cp_error_msg" *ngIf="message">{{message}}</span>
+  <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1 / 1"
+    [resizeToWidth]="280" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+    (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
+
+  <div class="text-center">
+    <img [src]="croppedImage" />
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" [disabled]="isUpdateProcess" (click)="uploadPic()">Update<span
+      *ngIf="isUpdateProcess">...</span></button>
+  <button type="button" class="btn btn-primary" [disabled]="isUpdateProcess"
+    (click)="uploadImage.click()">Change</button>
+</div>

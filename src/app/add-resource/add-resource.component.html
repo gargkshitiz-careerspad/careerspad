@@ -1,0 +1,105 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+    <li aria-current="page" class="breadcrumb-item active">Add Resource</li>
+  </ol>
+</nav>
+<section *ngIf="!isPageLoading">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div *ngIf="!showResourcePreview" class="cp_login">
+          <h4>Add Resource</h4>
+          <form [formGroup]="addResourceForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <select class="form-control" formControlName="catg"
+                [ngClass]="{ 'is-invalid': submitted && f.catg.errors }" (change)="loadImages()">
+                <option value="">Select Resource Category</option>
+                <option *ngFor="let spec of specArr" value="{{spec.id}}">{{spec.catg_name}}</option>
+              </select>
+              <div *ngIf="submitted && f.catg.errors" class="invalid-feedback">
+                <div *ngIf="f.catg.errors.required">Category is required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <select class="form-control" formControlName="sub_catg"
+                [ngClass]="{ 'is-invalid': submitted && f.sub_catg.errors }">
+                <option value=""><span *ngIf="subCatgArr.length==0">Select Category First</span><span
+                    *ngIf="subCatgArr.length>0">Select Sub Category</span></option>
+                <option *ngFor="let subSpec of subCatgArr" value="{{subSpec.id}}">{{subSpec.sub_c_name}}</option>
+              </select>
+              <div *ngIf="submitted && f.sub_catg.errors" class="invalid-feedback">
+                <div *ngIf="f.sub_catg.errors.required">Sub Category is required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input class="form-control" formControlName="title" placeholder="Title" type="text"
+                [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
+              <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                <div *ngIf="f.title.errors.required">Title is required</div>
+              </div>
+            </div>
+            <div class="form-group"><input class="form-control" formControlName="tagLine"
+                placeholder="Short Description (Limit 180 Characters)" type="text"
+                [ngClass]="{ 'is-invalid': submitted && f.tagLine.errors }">
+              <div *ngIf="submitted && f.tagLine.errors" class="invalid-feedback">
+                <div *ngIf="f.tagLine.errors.required">Short Description is required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Upload Description</label><br />
+              <input type="radio" formControlName="blogType" name="blogType" value="0"> By Type &nbsp;&nbsp;
+              <input type="radio" formControlName="blogType" name="blogType" value="1"> By External Url
+            </div>
+            <div class="form-group" *ngIf="!showExternalUrlField">
+              <ck-editor formControlName="description" [config]="config" skin="moono-lisa" language="en"
+                [fullPage]="true"></ck-editor>
+              <div *ngIf="showDescErr" class="cp_error_msg">Description is required</div>
+            </div>
+            <div class="form-group" *ngIf="showExternalUrlField">
+              <input class="form-control" formControlName="externalURL" placeholder="External Url" type="text"
+                [ngClass]="{ 'is-invalid': submitted && f.externalURL.errors }">
+              <div *ngIf="submitted && f.externalURL.errors" class="invalid-feedback">
+                <div *ngIf="f.externalURL.errors.required">External Url is required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label (click)="showImages()">Click here to Select Image</label>
+              <div class="cp_media_box" *ngIf="showHideImages">
+                <div class="row">
+                  <div class="col-md-3" *ngFor="let img of imgArr">
+                    <img src="./assets/images/media/{{img.img}}" (click)="selectImage(img.img)" class="w-100" />
+                  </div>
+                </div>
+              </div>
+              <div class="uploadImg" *ngIf="selectedImgShow">
+                <div class="row">
+                  <div class="col-md-3"><img alt="" class="w-100" src="./assets/images/media/{{selectedImgName}}"></div>
+                </div>
+              </div>
+              <div *ngIf="showImgErr" class="cp_error_msg">Image is required</div>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Preview</button>
+            </div>
+          </form>
+        </div>
+        <div *ngIf="showResourcePreview" class="row">
+          <div class="col-md-6">
+            <app-resource-tile [resource]="previewResourceObj" [preview]="true"></app-resource-tile>
+            <div class="form-group">
+              <button type="button" (click)="addResource()" class="btn btn-primary"
+                [disabled]="isAddResourceProcess">Add
+                Resource<span *ngIf="isAddResourceProcess">...</span></button>&nbsp;&nbsp;&nbsp;
+              <button type="button" class="btn btn-warning" [disabled]="isAddResourceProcess"
+                (click)="editResource()">Edit Resource</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <app-user-page-side-bar></app-user-page-side-bar>
+      </div>
+    </div>
+  </div>
+</section>

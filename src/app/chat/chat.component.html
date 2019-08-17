@@ -1,0 +1,43 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+    <li aria-current="page" class="breadcrumb-item active">Chat</li>
+  </ol>
+</nav>
+<section *ngIf="!isPageLoading" [style.minHeight]="wrapperHeight+'px'">
+  <div class="container">
+    <div class="cp_chat">
+      <div class="row">
+        <div class="col-md-4 hidden-mobile">
+          <div class="cp_chat_content" [style.height]="chatBoxHeight+'px'">
+            <h3><span><img src="{{userobj.pic}}" alt="{{userobj.name}}">{{userobj.name}}</span></h3>
+            <ul>
+              <li *ngFor="let mm of mmArr"><a [routerLink]="['/chat',mm.id]"><span><img src="{{mm.pic}}" alt="{{mm.name}}">{{mm.name}}</span></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="cp_chat_content bg" [style.height]="chatBoxHeight+'px'">              
+              <h3>
+                <span><img src="{{chat.sentToUserImg}}" alt="{{chat.sentToUserName}}">{{chat.sentToUserName}}</span>
+                <i class="fa fa-arrow-left backBtn" (click)="backPage()"></i>
+                <i class="fa fa-refresh refreshChat" (click)="refreshChat()"></i>                
+              </h3>
+            <div class="chat_history">
+              <div *ngFor="let cobj of chat.data">
+                  <div *ngIf="cobj.date && cobj.date!=''" class="chat_date"><span>{{cobj.date}}</span></div>
+                  <div [ngClass]="cobj.sentBy === chatWith ? 'received' : 'sent'" >                  
+                      <span>{{cobj.msg}}<label>{{cobj.time}}</label></span>
+                    </div>
+              </div>              
+            </div>
+            <div class="chat_input_box">
+              <input type="text" placeholder="Type youe message here" #msg/>
+              <i class="fa fa-send" (click)="sendMsg()"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,43 @@
+.login-page-outer {
+  background: #000000;
+  background-size: cover;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  & .cover-caption {
+    width: 100%;
+    & .login-form {
+        font-size: 13px;
+        & label {
+            margin-bottom: 0px;
+        }
+        & input, & button {
+            background: #000000;
+            border: 0;
+            color: #ffffff;
+            border-radius: 0%;
+            font-size: 13px;
+        }
+        & input {
+            height: 25px;
+            padding: 0px;
+            border-bottom: 1px solid #333333;
+        }
+        & input:focus {
+            border-color: inherit;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+        & button {
+            padding: 0;
+        }
+        & input:-webkit-autofill {
+            box-shadow: 0 0 0 1000px #000 inset;
+            -webkit-box-shadow: 0 0 0 1000px #000 inset;
+            -webkit-text-fill-color: #fff !important;
+        }
+    }
+  }
+  
+}

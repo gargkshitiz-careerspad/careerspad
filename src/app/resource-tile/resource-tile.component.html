@@ -1,0 +1,50 @@
+<div class="cp_resources" [ngClass]="{'owlTile': style=='owlc'}">
+    <a *ngIf="!preview && !resource.external" class="image"
+        [routerLink]="['/resources',resource.curl,resource.url]"><img src="./assets/images/media/{{resource.sub_c_img}}"
+            alt="{{resource.sub_c_name}}"><span *ngIf="resource.video" class="video-sign"><i
+                class="fa fa-play"></i></span></a>
+    <a *ngIf="!preview && resource.external" class="image" href="{{resource.url}}" target="_blank"><img
+            src="./assets/images/media/{{resource.sub_c_img}}" alt="{{resource.sub_c_name}}"><span
+            *ngIf="resource.video" class="video-sign"><i class="fa fa-play"></i></span></a>
+    <a *ngIf="preview" class="image"><img src="./assets/images/media/{{resource.sub_c_img}}"
+            alt="{{resource.sub_c_name}}"><span *ngIf="resource.video" class="video-sign"><i
+                class="fa fa-play"></i></span></a>
+    <div class="content">
+        <h4>
+            <a *ngIf="!preview && !resource.external"
+                [routerLink]="['/resources',resource.curl,resource.url]">{{resource.sub_c_name}}</a>
+            <a *ngIf="!preview && resource.external" href="{{resource.url}}" target="_blank">{{resource.sub_c_name}}</a>
+            <a *ngIf="preview">{{resource.sub_c_name}}</a>
+        </h4>
+        <p>{{resource.tag_line}}</p>
+    </div>
+    <div class="details">
+        <a *ngIf="!preview && !resource.external" class="read_more"
+            [routerLink]="['/resources',resource.curl,resource.url]"><i class="fa fa-arrow-right"></i>
+            <span *ngIf="resource.video">WATCH VIDEO</span><span *ngIf="!resource.video">READ MORE</span></a>
+        <a *ngIf="!preview && resource.external" class="read_more" href="{{resource.url}}" target="_blank"><i
+                class="fa fa-arrow-right"></i>
+            <span *ngIf="resource.video">WATCH VIDEO</span><span *ngIf="!resource.video">READ MORE</span></a>
+        <a *ngIf="preview" class="read_more"><i class="fa fa-arrow-right"></i>
+            <span *ngIf="resource.video">WATCH VIDEO</span><span *ngIf="!resource.video">READ MORE</span></a>
+        <div class="author">
+            <img src="{{resource.uploadByImg}}"> By
+            <a *ngIf="resource.uploadUserUrl=='' && !resource.external"
+                [routerLink]="['']">{{resource.uploadByName}}</a>
+            <a *ngIf="resource.uploadUserUrl!='' && !resource.external"
+                [routerLink]="['/mentors','profile',resource.uploadUserUrl]">{{resource.uploadByName}}</a>
+            <a *ngIf="resource.uploadUserUrl!='' && resource.external" href="{{resource.uploadUserUrl}}"
+                target="_blank">{{resource.uploadByName}}</a>
+        </div>
+    </div>
+    <div *ngIf="dashboard && !isMentee" class="booking">
+        <a *ngIf="!isDeleteProcess" class="delete text-danger" (click)="deleteResource(resource.id)"><i
+                class="fa fa-trash"></i> Delete</a>
+        <a *ngIf="isDeleteProcess" class="delete text-danger">loading...</a>
+    </div>
+    <div *ngIf="approval" class="booking">
+        <a *ngIf="!isApprovedProcess" class="delete text-success" (click)="approvedResource(resource.id)"><i
+                class="fa fa-check"></i> Approved</a>
+        <a *ngIf="isApprovedProcess" class="delete text-danger">loading...</a>
+    </div>
+</div>

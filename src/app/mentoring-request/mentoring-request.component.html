@@ -1,0 +1,37 @@
+<div>
+  <h5>Mentoring Requests</h5>
+  <p *ngIf="mrArr.length==0">No Mentoring Request</p>
+  <div *ngIf="mrArr.length>0" class="mentoringRequest">
+    <ul>
+      <li *ngFor="let mr of mrArr">
+        <a><img src="{{mr.pic}}" alt="{{mr.name}}"></a>
+        <span>
+          <a>{{mr.name}}</a><br>
+          <a *ngIf="userobj.role==1 && !isCancelRequestProcess" class="rmve" (click)="cancelRequest(mr.id)"><span>Cancel Request</span></a>
+          <a *ngIf="userobj.role==1 && isCancelRequestProcess" class="rmve"><span>loading...</span></a>
+          <a *ngIf="userobj.role==2 && !isAcceptRequestProcess" class="chat" (click)="acceptRequest(mr.id)"><span>Accept</span></a>
+          <a *ngIf="userobj.role==2 && isAcceptRequestProcess" class="chat"><span>loading...</span></a>
+          <a *ngIf="userobj.role==2 && !isDeclineRequestProcess" class="rmve" (click)="declineRequest(mr.id)"><span>Decline</span></a>
+          <a *ngIf="userobj.role==2 && isDeclineRequestProcess" class="rmve"><span>loading...</span></a>
+        </span>
+      </li>
+    </ul>
+  </div>
+  <h5 *ngIf="userobj.role==1">My Mentors</h5>
+  <h5 *ngIf="userobj.role==2">My Mentees</h5>
+  <p *ngIf="userobj.role==1 && mmArr.length==0">No Mentor</p>
+  <p *ngIf="userobj.role==2 && mmArr.length==0">No Mentee</p>
+  <div *ngIf="mmArr.length>0" class="mentoringRequest">
+    <ul>
+      <li *ngFor="let mm of mmArr">
+        <a><img src="{{mm.pic}}" alt="{{mm.name}}"></a>
+        <span>
+          <a>{{mm.name}}</a><br>
+          <a class="chat" [routerLink]="['/chat',mm.id]">Chat</a>
+          <a *ngIf="!isRemoveRequestProcess" class="rmve" (click)="removeRequest(mm.id)"><span>Remove</span></a>
+          <a *ngIf="isRemoveRequestProcess" class="rmve"><span>loading...</span></a>
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>

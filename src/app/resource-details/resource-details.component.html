@@ -1,0 +1,32 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+    <li aria-current="page" class="breadcrumb-item">Resources</li>
+    <li aria-current="page" class="breadcrumb-item">{{resObj.catg_name}}</li>
+    <li aria-current="page" class="breadcrumb-item active">{{resObj.name}}</li>
+  </ol>
+</nav>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="cp_page_content">
+          <img src="./assets/images/media/{{resObj.img}}" alt="{{resObj.name}}">
+          <h2>{{resObj.name}}</h2>
+          <p [innerHtml]="resObj.desc"></p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="side-category">
+          <h3>Related Resources</h3>
+          <ul>
+            <li *ngFor="let list of resObj.resList">
+              <a *ngIf="!list.external" [routerLink]="['/resources',list.curl,list.url]" [routerLinkActive]="'active'">{{list.sub_c_name}}</a>
+              <a *ngIf="list.external" href="{{list.url}}" target="_blank">{{list.sub_c_name}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

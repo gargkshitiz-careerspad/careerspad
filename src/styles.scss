@@ -1,0 +1,99 @@
+@import '~bootstrap/scss/bootstrap';
+@import '~ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
+@import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
+
+html, body{
+ height: 100%;
+}
+body {
+    font-family: Rubik,Arial,sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.5;
+    color: #555;
+    background: #fff;
+}
+:root{
+    --blue-color: #0678be;
+    --orange-color: #f8981d;
+    --black-color: #111;
+}
+a{
+    color: var(--blue-color);
+    cursor: pointer;
+}
+a:hover{
+    text-decoration: none;
+    color: var(--orange-color);
+}
+.cp_theme_color_text{
+    color: var(--blue-color);
+}
+.btn.btn-primary{
+    background:  var(--blue-color);
+}
+.owlTile{
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+}
+.loadMoreBtn{
+    background: var(--blue-color);
+    margin: 10px 0 25px;
+    color: #fff;
+    padding: 8px 15px;
+    border:  none;
+    border-radius: 5px;
+}
+.cp_error_msg {
+    margin-top: 5px;
+    font-size: 80%;
+    color: #dc3545;
+}
+.cp_main_heading{
+    color: var(--black-color);
+    font-size: 24px;
+    text-align: center;
+    margin: 25px 0 0;
+    padding: 0;
+}
+.cp_login {
+    margin: 20px 0 30px;
+    box-shadow: 0 0 3px #aaa;
+    padding: 20px 30px 1px;
+    background: #fff;
+
+    & h2, & h3 {
+        color: var(--black-color);
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+}
+.cp_page_content {
+    margin: 20px 0;
+    padding: 0;
+
+    & h2 {
+        font-size: 24px;
+        color: var(--black-color);
+    }
+    & p {
+        font-size: 15px;
+        margin: 15px 0;
+    }
+    & img {
+        width: 100%;
+    }
+}
+
+.cp_ask_question{
+    margin: 15px 0 30px;
+
+    & h3{
+        color: var(--black-color);
+        margin: 0 0 12px;
+        padding: 0;
+        font-size: 24px;
+    }
+}
+
+

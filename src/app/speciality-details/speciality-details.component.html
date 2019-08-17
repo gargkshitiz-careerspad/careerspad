@@ -1,0 +1,41 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+    <li class="breadcrumb-item">Speciality</li>
+    <li class="breadcrumb-item"><a [routerLink]="['/speciality',specObj.catg_url]">{{specObj.catg_name}}</a></li>
+    <li aria-current="page" class="breadcrumb-item active">{{specObj.sub_c_name}}</li>
+  </ol>
+</nav>
+<section *ngIf="!isPageLoading">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="cp_page_content">
+          <h3>{{specObj.sub_c_name}}</h3>
+          <img src="/assets/images/sub_category/{{specObj.sub_c_img}}" alt="{{specObj.sub_c_name}}">
+          <p class="text-justify" [innerHtml]="specObj.sub_c_desc"></p>
+        </div>
+        <h4 class="cp_main_heading">Resources</h4>
+        <div class="row">
+          <div *ngFor="let resource of specObj.resources" class="col-md-6">
+            <app-resource-tile [resource]="resource"></app-resource-tile>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h3 class="cp_main_heading">Mentors</h3>
+        <owl-carousel-o [options]="customOptions">
+          <ng-template *ngFor="let mentor of specObj.mentors" carouselSlide>
+            <app-mentor-tile [mentor]="mentor"></app-mentor-tile>
+          </ng-template>
+        </owl-carousel-o>
+        <h3 class="cp_main_heading">Programs</h3>
+        <owl-carousel-o [options]="customOptions">
+          <ng-template *ngFor="let program of specObj.programs" carouselSlide>
+            <app-program-tile [program]="program"></app-program-tile>
+          </ng-template>
+        </owl-carousel-o>
+      </div>
+    </div>
+  </div>
+</section>

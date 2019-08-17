@@ -1,0 +1,40 @@
+.side-category{
+    margin: 20px 0;
+    padding: 0;
+
+    & h3{
+        margin: 0 0 15px;
+        padding: 0;
+        color: var(--black-color);
+        font-size: 24px;
+    }
+    & ul{
+        margin: 0;
+        padding: 0;
+
+        & li{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            & a{
+                margin: 0;
+                padding: 8px 15px;
+                background: #f7f7f7;
+                display: block;
+                color: #333;
+                border-bottom: 1px solid #fff;
+                cursor: pointer;
+            }
+            & a.active{
+                background: var(--blue-color);
+                color: #fff;
+            }
+            & a:hover{
+                background: var(--blue-color);
+                color: #fff;
+                text-decoration: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,18 @@
+<div class="cp_my_questions">
+  <h4>Question &amp; Answer</h4>
+  <div *ngFor="let qa of qaArr; let i = index" class="cp_q_list">
+    <div class="cp_ques" *ngIf="!qa.isAnswered">{{i+1}}. {{qa.question}}</div>
+    <div class="cp_ans" *ngIf="!qa.isAnswered" [innerHtml]="qa.answer"></div>
+    <span *ngIf="showAnswerBtn && qid!=qa.id && !qa.isAnswered" class="cp_submit_ans" (click)="showAnswerForm(qa.id)">Click here to submit your answer</span>
+    <form [formGroup]="answerForm" (ngSubmit)="onSubmit()" *ngIf="qid===qa.id">
+      <div class="form-group">
+        <ck-editor formControlName="answer" [config]="config" skin="moono-lisa" language="en" [fullPage]="true">
+        </ck-editor>
+      </div>
+      <div class="form-group">
+        <button [disabled]="isAnswerSubmitProcess" class="btn btn-primary"
+          type="submit">Submit<span *ngIf="isAnswerSubmitProcess">...</span></button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,107 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+    <li aria-current="page" class="breadcrumb-item active">Dashboard</li>
+  </ol>
+</nav>
+<section [style.minHeight]="wrapperHeight+'px'">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div id="accordion">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h5 aria-controls="collapseOne" aria-expanded="true" class="mb-0" data-target="#collapseOne"
+                data-toggle="collapse"><span>My Mentees</span></h5>
+            </div>
+            <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordion" id="collapseOne">
+              <div class="card-body">
+                <app-mentoring-request></app-mentoring-request>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingTwo">
+              <h5 aria-controls="collapseTwo" aria-expanded="false" class="collapsed mb-0" data-target="#collapseTwo"
+                data-toggle="collapse"> My Questions </h5>
+            </div>
+            <div aria-labelledby="headingTwo" class="collapse" data-parent="#accordion" id="collapseTwo">
+              <div class="card-body">
+                <app-career-advice-tile></app-career-advice-tile>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h5 aria-controls="collapseThree" aria-expanded="false" class="collapsed mb-0"
+                data-target="#collapseThree" data-toggle="collapse"> My Resources </h5>
+            </div>
+            <div aria-labelledby="headingThree" class="collapse" data-parent="#accordion" id="collapseThree">
+              <div class="card-body">
+                <h6 *ngIf="!isMentee">Requested Resources</h6>
+                <div *ngIf="!isMentee" class="row">
+                  <div *ngFor="let resource of reqResArr.data" class="col-md-6">
+                    <app-resource-tile [resource]="resource" [dashboard]="true" [isMentee]="isMentee" [preview]="true">
+                    </app-resource-tile>
+                  </div>
+                </div>
+                <div *ngIf="!isMentee" class="text-center">
+                  <button *ngIf="reqResArr.total>6 && reqResArr.total>reqResArr.data.length" type="button"
+                    class="loadMoreBtn" (click)="loadMoreRequestedResources(reqResArr.count)">Load
+                    More</button>
+                </div>
+                <h6 *ngIf="!isMentee">Approved Resources</h6>
+                <div class="row">
+                  <div *ngFor="let resource of appResArr.data" class="col-md-6">
+                    <app-resource-tile [resource]="resource" [dashboard]="true" [isMentee]="isMentee">
+                    </app-resource-tile>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button *ngIf="appResArr.total>6 && appResArr.total>appResArr.data.length" type="button"
+                    class="loadMoreBtn" (click)="loadMoreApprovedResources(appResArr.count)">Load
+                    More</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingFour">
+              <h5 aria-controls="collapseFour" aria-expanded="false" class="collapsed mb-0" data-target="#collapseFour"
+                data-toggle="collapse"> My Programs </h5>
+            </div>
+            <div aria-labelledby="headingFour" class="collapse" data-parent="#accordion" id="collapseFour">
+              <div class="card-body">
+                <h6>Requested Programs</h6>
+                <div class="row">
+                  <div *ngFor="let program of reqProgArr.data" class="col-md-6">
+                    <app-program-tile [program]="program" [dashboard]="true" [preview]="true" [isMentee]="isMentee"></app-program-tile>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button *ngIf="reqProgArr.total>6 && reqProgArr.total>reqProgArr.data.length" type="button"
+                    class="loadMoreBtn" (click)="loadMoreRequestPrograms(reqProgArr.count)">Load
+                    More</button>
+                </div>
+                <h6>Approved Programs</h6>
+                <div class="row">
+                  <div *ngFor="let program of appProgArr.data" class="col-md-6">
+                    <app-program-tile [program]="program" [dashboard]="true" [isMentee]="isMentee"></app-program-tile>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button *ngIf="appProgArr.total>6 && appProgArr.total>appProgArr.data.length" type="button"
+                    class="loadMoreBtn" (click)="loadMoreApprovedPrograms(appProgArr.count)">Load
+                    More</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <app-user-page-side-bar></app-user-page-side-bar>
+      </div>
+    </div>
+  </div>
+</section>

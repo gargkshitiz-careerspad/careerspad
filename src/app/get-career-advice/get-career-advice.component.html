@@ -1,0 +1,57 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+        <li aria-current="page" class="breadcrumb-item active">Get Career Advice</li>
+    </ol>
+</nav>
+<section *ngIf="!isPageLoading">
+    <div class="container">
+        <div class="cp_page_content">
+            <h2 class="text-center">Get Career Advice</h2>
+            <img alt="Get Career Advice" src="./assets/images/career-doctor.jpg">
+            <p class="text-center">Post your career query and get specific answer from specific
+                subject matter experts.</p>
+            <p class="text-center">CareersPad's smart algorithms will determine the nature of your
+                query and get you the most relevant answer from its ever growing repository of experts' career advices
+                across the world.</p>
+            <p class="text-center">You can also find what career questions are being asked from other
+                mentees and refine your thoughts to be much clearer in your queries.</p>
+        </div>
+        <div class="cp_ask_question">
+            <h3 class="text-center">Post Question</h3>
+            <form [formGroup]="askQuestionForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select class="form-control" formControlName="catg"
+                                [ngClass]="{ 'is-invalid': submitted && f.catg.errors }">
+                                <option value="">Select Category</option>
+                                <optgroup *ngFor="let spec of specArr" label="{{spec.catg_name}}">
+                                    <option *ngFor="let sub_spec of spec.sub" value="{{sub_spec.id}}">
+                                        {{sub_spec.sub_c_name}}</option>
+                                </optgroup>
+                            </select>
+                            <div *ngIf="submitted && f.catg.errors" class="invalid-feedback">
+                                <div *ngIf="f.catg.errors.required">Category is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <input class="form-control" formControlName="question"
+                                placeholder="Type your career question here" type="text"
+                                [ngClass]="{ 'is-invalid': submitted && f.question.errors }">
+                            <div *ngIf="submitted && f.question.errors" class="invalid-feedback">
+                                <div *ngIf="f.question.errors.required">Question is required</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button *ngIf="showAskBtn" [disabled]="isAskQuestionProcess" class="btn btn-primary"
+                        type="submit">Submit<span *ngIf="isAskQuestionProcess">...</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,6 @@
+<div class="side-category">
+    <h3>{{heading}}</h3>
+    <ul>
+        <li *ngFor="let catg of list"><a [routerLink]="[click,catg.seo_url]">{{catg.catg_name}}</a></li>
+    </ul>
+</div>

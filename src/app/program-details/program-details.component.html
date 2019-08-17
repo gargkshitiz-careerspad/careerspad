@@ -1,0 +1,62 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+    <li aria-current="page" class="breadcrumb-item"><a [routerLink]="['/programs']">Programs</a></li>
+    <li aria-current="page" class="breadcrumb-item">{{progObj.catg_name}}</li>
+    <li aria-current="page" class="breadcrumb-item active">{{progObj.name}}</li>
+  </ol>
+</nav>
+<section *ngIf="!isPageLoading" [style.minHeight]="wrapperHeight+'px'">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="cp_program_details">
+          <h3>{{progObj.name}}</h3>
+          <div class="cp_program_img"><img style="width: 100%;" src="../../../assets/images/media/{{progObj.img}}">
+          </div>
+          <div class="descrp" [innerHtml]="progObj.desc"></div>
+          <p *ngFor="let dates of progObj.dates">
+            <i class="fa fa-calendar"></i> {{dates.fromDate}}&nbsp;&nbsp;|&nbsp;&nbsp;
+            <i class="fa fa-clock-o"></i> {{dates.fromTime}} - {{dates.toTime}}
+          </p>
+          <p style="margin: 10px 0 "><i class="fa fa-{{progObj.addressIcon}}"></i> {{progObj.address}}</p>
+          <p><i class="fa fa-rupee"></i> {{progObj.price}}</p>
+          <form *ngIf="progObj.weekDay!='' && !progObj.bookingClosed" [formGroup]="programBookingForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label>Pease select date before booking</label>
+              <select formControlName="bookDate" class="booking_dates_drp"
+                [ngClass]="{ 'is-invalid': submitted && f.bookDate.errors }">
+                <option value="">Select Date</option>
+                <option *ngFor="let dates of progObj.dates" [disabled]="dates.booked" value="{{dates.id}}">{{dates.fromDate}}</option>
+              </select>
+              <div *ngIf="submitted && f.bookDate.errors" class="invalid-feedback">
+                <div *ngIf="f.bookDate.errors.required">Booking Date is required</div>
+              </div>
+              <div *ngIf="submitted && programBookingForm.invalid" class="cp_error_msg">Booking Date is required</div>
+            </div>
+            <button *ngIf="showBookingBtn && !progObj.isBooked && progObj.weekDay!=''" class="btn btn-primary"
+              [disabled]="isBookingProcess" type="submit">Book Your Seat<span
+                *ngIf="isBookingProcess">...</span></button>
+          </form>
+          <button *ngIf="!progObj.bookingClosed && showBookingBtn && !progObj.isBooked && progObj.weekDay==''" class="btn btn-primary"
+            [disabled]="isBookingProcess" type="button" (click)="programBooking()">Book Your Seat<span
+              *ngIf="isBookingProcess">...</span></button>
+          <p *ngIf="progObj.isBooked && !progObj.bookingStatus"><b class="text-danger">You have already sent to request for booking.</b></p>
+          <p *ngIf="progObj.isBooked && progObj.bookingStatus"><b class="text-danger">You have already booked this program. Your ticket id
+              is {{progObj.ticket_id}}</b></p>
+          <p *ngIf="progObj.bookingClosed"><b class="text-danger">Booking Closed</b></p>
+          <p *ngIf="userobj && userobj.role==2"><b class="text-danger">Program can not book by mentor's login.</b></p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h3 style="margin: 20px 5px -8px 5px;">Program Facilitator</h3>
+        <owl-carousel-o [options]="customOptions">
+          <ng-template *ngFor="let mentor of progObj.facilitator" carouselSlide>
+            <app-mentor-tile [mentor]="mentor"></app-mentor-tile>
+          </ng-template>
+        </owl-carousel-o>
+        <br>
+      </div>
+    </div>
+  </div>
+</section>

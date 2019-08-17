@@ -1,0 +1,32 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+        <li aria-current="page" class="breadcrumb-item active">Resources</li>
+    </ol>
+</nav>
+<section *ngIf="!isPageLoading">
+    <div class="container">
+        <div class="cp_page_content">
+            <h2 class="text-center">Resources</h2>
+            <img alt="Resources" src="./assets/images/resources.jpg">
+            <p class="text-center">Instantly access to the best career resources based on your career interests, needs
+                and aspirations.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <app-page-side-bar [list]="specArr" [heading]="'Resources By Speciality'" [click]="'/resources'">
+                </app-page-side-bar>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div *ngFor="let resource of resArr.data" class="col-md-6 col-sm-12">
+                        <app-resource-tile [resource]="resource"></app-resource-tile>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button *ngIf="resArr.total>6 && resArr.total>resArr.data.length" type="button" class="loadMoreBtn" (click)="loadMore(resArr.count)">Load More</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

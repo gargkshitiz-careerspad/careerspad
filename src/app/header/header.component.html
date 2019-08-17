@@ -1,0 +1,58 @@
+<header>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2 col-6">
+        <div class="cp_logo"><a [routerLink]="['/']"><img alt="CareersPad Logo" src="/assets/images/new1.png"></a></div>
+      </div>
+      <div class="col-md-8 col-12 mobi-view">
+        <nav class="navbar navbar-expand-md"><button aria-controls="navbarCollapse" aria-expanded="false"
+            aria-label="Toggle navigation" class="navbar-toggler collapsed" data-target="#navbarCollapse"
+            data-toggle="collapse" type="button"><span class="navbar-toggler-icon"><i
+                class="fa fa-bars"></i></span></button>
+          <div class="collapse navbar-collapse" id="navbarCollapse" #navbarCollapse>
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item"><a class="nav-link" [routerLink]="['/about']" (click)="closeMenu()">About Us</a>
+              </li>
+              <li class="nav-item"><a class="nav-link" [routerLink]="['/get-career-advice']" (click)="closeMenu()">Get
+                  Advice</a></li>
+              <li class="nav-item"><a class="nav-link" [routerLink]="['/mentors']" (click)="closeMenu()">Mentors</a>
+              </li>
+              <li class="nav-item"><a class="nav-link" [routerLink]="['/resources']" (click)="closeMenu()">Resources</a>
+              </li>
+              <li class="nav-item"><a class="nav-link" [routerLink]="['/programs']" (click)="closeMenu()">Programs</a>
+              </li>
+              <li class="nav-item dropdown" ngbdropdown="">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  Speciality
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" *ngFor="let spec of specArr" [routerLink]="['/speciality',spec.seo_url]"
+                    (click)="closeMenu()">{{spec.catg_name}}</a>
+                </div>
+              </li>
+              <li class="nav-item"><a class="nav-link" [routerLink]="['/campus-connect']" (click)="closeMenu()">Campus
+                  Connect</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="col-md-2 col-4">
+        <div class="cp_top_menu_login" *ngIf="!userobj">
+          <a [routerLink]="['/login']">Login</a>&nbsp;|&nbsp;<a [routerLink]="['/register']">Signup</a>
+        </div>
+        <div class="dropdown" *ngIf="userobj && userobj.token">
+          <button class="user-avtar dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <img alt="" class="userTopImg" src="{{userobj.pic}}">
+            <span class="caret"></span>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" [routerLink]="['/dashboard']">Dashboard</a>
+            <a class="dropdown-item" [routerLink]="['/profile']">Profile</a>
+            <a class="dropdown-item" (click)="logout()">Logout</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,24 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+    <li aria-current="page" class="breadcrumb-item active">Approval Request</li>
+  </ol>
+</nav>
+<section [style.minHeight]="wrapperHeight+'px'">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h3 class="cp_main_heading text-left">Approval Resources</h3>
+        <div class="row">
+          <div *ngFor="let resource of reqResArr.data" class="col-md-6">
+            <app-resource-tile [resource]="resource" [approval]="true" [preview]="true">
+            </app-resource-tile>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <app-user-page-side-bar></app-user-page-side-bar>
+      </div>
+    </div>
+  </div>
+</section>

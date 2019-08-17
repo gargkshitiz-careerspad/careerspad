@@ -1,0 +1,28 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+        <li class="breadcrumb-item"><a href="javascript:void(0)">Speciality</a></li>
+        <li aria-current="page" class="breadcrumb-item active">{{specObj.catg_name}}</li>
+    </ol>
+</nav>
+<section *ngIf="!isPageLoading" [style.minHeight]="wrapperHeight+'px'">
+    <div class="container-fluid">
+        <div class="cp_page_content">
+            <h2 class="text-center">{{specObj.catg_name}}</h2>
+            <p class="text-center" [innerHtml]="specObj.catg_desc"></p>
+        </div>
+        <div class="row">
+            <div class="col-md-3" *ngFor="let subSpec of specObj.subCatgArr">
+                <div class="cp_speciality">
+                    <a [routerLink]="['/speciality',specObj.catg_url,subSpec.seo_url]" class="image"><img src="../assets/images/sub_category/{{subSpec.sub_c_img}}"
+                            alt="{{subSpec.sub_c_name}}"></a>
+                    <div class="content">
+                        <h4><a [routerLink]="['/speciality',specObj.catg_url,subSpec.seo_url]">{{subSpec.sub_c_name}}</a></h4>
+                        <p>{{subSpec.sub_c_tag_line}}</p>
+                    </div>
+                    <div class="details"><a [routerLink]="['/speciality',specObj.catg_url,subSpec.seo_url]" class="read_more"><i class="fa fa-arrow-right"></i> READ MORE</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

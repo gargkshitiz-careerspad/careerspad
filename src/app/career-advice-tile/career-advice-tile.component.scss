@@ -1,0 +1,16 @@
+.cp_my_questions{
+    
+    & .cp_q_list{
+        margin: 15px 0;
+
+        & .cp_ques{
+            font-size: 13px;
+            font-weight: 600;
+        }
+        & .cp_submit_ans{
+            font-size: 13px;
+            color: var(--blue-color);
+            cursor: pointer;
+        }
+    }
+}

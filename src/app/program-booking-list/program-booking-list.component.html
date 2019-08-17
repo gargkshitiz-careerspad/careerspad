@@ -1,0 +1,56 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+    <li aria-current="page" class="breadcrumb-item active">Program Booking List</li>
+  </ol>
+</nav>
+<section *ngIf="!isPageLoading">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h3 class="cp_heading">Program Booking List</h3>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th>S. No.</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Ticket Id</th>
+              <th>Attend</th>
+              <th>Confirm</th>
+            </tr>
+            <tr *ngFor="let list of pBookingArr; let i = index">
+              <td>{{i+1}}</td>
+              <td>{{list.name}}</td>
+              <td>{{list.contact}}</td>
+              <td class="text-center">
+                <span *ngIf="list.ticketId==''" class="fa fa-times text-danger"></span>
+                <span *ngIf="list.ticketId!=''">{{list.ticketId}}</span>
+              </td>
+              <td class="text-center">
+                <span *ngIf="list.attend && list.attend==0" class="fa fa-times text-danger"></span>
+                <span *ngIf="list.attend && list.attend!=0" class="fa fa-check text-success"></span>
+              </td>
+              <td class="text-center">
+                <input *ngIf="list.ticketId=='' && !showAttendCheckBox" type="checkbox" name="confirm"
+                  [(ngModel)]="confirmSelected[list.id]" />
+                <input *ngIf="list.attend=='0' && showAttendCheckBox" type="checkbox" name="confirm"
+                  [(ngModel)]="confirmSelected[list.id]" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="confirmError" class="cp_error_msg">At least one must be selected</div>
+        <div class="form-group">
+          <button *ngIf="!showAttendCheckBox" type="button" class="btn btn-primary" [disabled]="isConfirmProcess"
+            (click)="onSubmit()">Confirm Booking<span *ngIf="isConfirmProcess">...</span></button>
+          <button *ngIf="showAttendCheckBox" type="button" class="btn btn-primary" [disabled]="isAttendProcess"
+            (click)="attend()">Submit<span *ngIf="isAttendProcess">...</span></button>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <app-user-page-side-bar></app-user-page-side-bar>
+      </div>
+    </div>
+  </div>
+</section>

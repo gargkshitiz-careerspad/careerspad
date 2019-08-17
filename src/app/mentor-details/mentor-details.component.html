@@ -1,0 +1,41 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+    <li aria-current="page" class="breadcrumb-item"><a [routerLink]="['/mentors']">Mentors</a></li>
+    <li aria-current="page" class="breadcrumb-item active">{{mentorObj.name}}</li>
+  </ol>
+</nav>
+<section *ngIf="!isPageLoading" [style.minHeight]="wrapperHeight+'px'">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="cp_mentor_profile">
+          <h2>{{mentorObj.name}}<a *ngIf="mentorObj.lpUrl!=''" class="btn btn-primary" style="margin-left: 15px;"
+              target="_blank" href="{{mentorObj.lpUrl}}"><i class="fa fa-linkedin"></i></a></h2>
+          <img class="mentorProfilePic" src="{{mentorObj.pic}}" alt="{{mentorObj.name}}">
+          <p>{{mentorObj.headline}}</p>
+          <p class="mentorSpcl"><span *ngFor="let spec of mentorObj.services" class="teacher">{{spec}}</span></p>
+          <p class="text-justify" [innerHtml]="mentorObj.aboutYourSelf"></p>
+          <button *ngIf="showRequestBtn && !mentorObj.isConnect" class="btn btn-primary" type="button"
+            [disabled]="isRequestProcess" (click)="requestMentoring()">Request Mentoring<span
+              *ngIf="isRequestProcess">...</span></button>
+          <a [routerLink]="['/mentors']" class="btn btn-primary" style="margin-left: 15px;">Other Mentors</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h3 *ngIf="programArr.data.length>0" style="margin: 20px 5px -8px 5px;">Programs</h3>
+        <owl-carousel-o [options]="customOptions">
+          <ng-template *ngFor="let program of programArr.data" carouselSlide>
+            <app-program-tile [program]="program"></app-program-tile>
+          </ng-template>
+        </owl-carousel-o>
+        <h3 *ngIf="resourceArr.data.length>0" style="margin: 20px 5px -8px 5px;">Resources</h3>
+        <owl-carousel-o [options]="customOptions">
+          <ng-template *ngFor="let resource of resourceArr.data" carouselSlide>
+            <app-resource-tile [resource]="resource"></app-resource-tile>
+          </ng-template>
+        </owl-carousel-o>
+      </div>
+    </div>
+  </div>
+</section>

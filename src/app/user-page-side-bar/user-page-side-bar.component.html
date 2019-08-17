@@ -1,0 +1,17 @@
+<div class="side-category">
+  <ul>
+    <li><a routerLinkActive="active" [routerLink]="['/dashboard']">Dashboard</a></li>
+    <li><a routerLinkActive="active" [routerLink]="['/profile']">Profile</a></li>
+    <li><a *ngIf="userobj.role==2" routerLinkActive="active" [routerLink]="['/add-program']">Add
+        Programs</a></li>
+    <li><a *ngIf="userobj.role==2" routerLinkActive="active" [routerLink]="['/add-resource']">Add
+        Resources</a></li>
+    <li><a *ngIf="userobj.role==2" routerLinkActive="active" [routerLink]="['/career-advice']">Career Advice</a></li>
+    <li><a *ngIf="userobj.role==2" routerLinkActive="active" [routerLink]="['/invite-mentors']">Invite Other Mentors</a></li>
+    <li><a *ngIf="userobj.role==2" routerLinkActive="active" [routerLink]="['/mentees']">Mentees</a></li>
+    <li><a *ngIf="userobj.role==2 && isCouncil" routerLinkActive="active" [routerLink]="['/approval-request']">Approval Request</a></li>
+    <li><a routerLinkActive="active" [routerLink]="['/change-password']">Change
+        Password</a></li>
+    <li><a (click)="logout()">Logout</a></li>
+  </ul>
+</div>

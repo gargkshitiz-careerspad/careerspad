@@ -1,0 +1,122 @@
+.cp_home_banner_img{
+    background-size: cover;
+}
+@media(max-width: 767px){
+    .cp_home_banner_img{
+        background-position-x: -150px;
+    }
+    
+}
+.bannerBottom{
+    color: #fff;
+    padding: 0 20px;
+    margin: 20px 0;
+    text-align: center;
+
+    & img{
+        width: 80px;
+    }
+
+    & h2{
+        font-size: 1.2em;
+        margin: 10px 0 0;
+    }
+
+    & p{
+        font-size: .92em;
+        margin: 0;
+        color: #555;
+        text-align: center;
+    }
+}
+.cp_speciality{
+    box-shadow: 0 0 3px #ccc;
+    margin: 20px 10px;
+
+    & a.image {
+        display: block;
+        overflow: hidden;
+        height: 220px;
+    }
+
+    & .content{
+        padding: 15px;
+        height: 170px;
+
+        & h4{
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            font-weight: 600;
+
+            & a{
+                color: var(--black-color);
+            }
+        }
+        & p{
+            margin: 10px 0;
+            padding: 0;
+            color: var(--black-color);
+            font-size: 14px;
+        }
+    }
+
+    & .details{
+        border-top: 1px solid #ccc;
+        margin-top: 15px;
+        padding: 10px 15px;
+
+        & .read_more{
+            padding-top: 5px;
+        }
+
+
+    }
+}
+
+.cp_become_a_mentor{
+    position: relative;
+    background: var(--orange-color);
+    padding: 25px 0;
+    margin-top: 30px;
+
+    & h3{
+        font-size: 30px;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+    }
+
+    & p{
+        font-size: 14px;
+        color: #fff;
+        margin: 0;
+    }
+
+    & a{
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #fff;
+        padding: 8px 15px;
+        margin: 12px 0 0;
+        border: 1px solid #fff;
+    }
+    & a:hover{
+        background: var(--blue-color);
+        color: #fff;
+        border: 1px solid var(--blue-color);
+    }
+}
+
+.carousel-caption {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 10;
+    padding-top: 20px;
+    color: #fff;
+    text-align: center;
+    background: rgba(0,0,0,0.5);
+}

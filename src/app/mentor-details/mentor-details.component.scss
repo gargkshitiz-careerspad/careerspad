@@ -1,0 +1,48 @@
+.cp_mentor_profile{
+    margin: 20px 0;
+
+    & h2{
+        margin: 0;
+        padding: 0;
+        font-size: 24px;
+    }
+    & .mentorProfilePic{
+        float: right;
+        height: 250px;
+        margin: 0 0 10px 10px;
+        padding: 2px;
+        border: 1px solid #aaa;
+        background: #fff;
+    }
+    & .mentorSpcl{
+        padding: 15px 0;
+        border-top: 1px solid #aaa;
+        border-bottom: 1px solid #aaa;
+
+        & span.teacher{
+            background: var(--orange-color);
+            color: #fff;
+            display: inline-block;
+            padding: 2px 5px 1px;
+            margin: 2px;
+            font-size: 12px;
+            font-weight: 400;
+            border-radius: 5px;
+        }
+    }
+}
+
+@media(max-width: 767px){
+    .cp_mentor_profile{
+        & h2{
+            margin-bottom: 10px;
+        }
+        & .mentorProfilePic{
+            float: none;
+            width: 100%;
+            height: auto;
+            margin: 0;
+            margin-bottom: 10px;
+        }
+    }
+}

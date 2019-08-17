@@ -1,0 +1,42 @@
+<div class="cp_programs" [ngClass]="{'owlTile': style=='owlc'}">
+    <a *ngIf="!preview" class="image" [routerLink]="['/programs',program.curl,program.url]"><img
+            src="./assets/images/{{program.img}}" alt="{{program.title}}"></a>
+    <a *ngIf="preview" class="image"><img src="./assets/images/{{program.img}}" alt="{{program.title}}"></a>
+    <div class="content">
+        <h4>
+            <a *ngIf="!preview" [routerLink]="['/programs',program.curl,program.url]">{{program.title}}</a>
+            <a *ngIf="preview">{{program.title}}</a>
+        </h4>
+        <p>{{program.tag_line}}</p>
+        <div class="time_location">
+            <i class="fa fa-calendar"></i> {{program.fromDate}}&nbsp;&nbsp;|&nbsp;&nbsp;
+            <i class="fa fa-clock-o"></i> {{program.fromTime}} - {{program.toTime}}<br>
+            <i class="fa fa-map-marker"></i> {{program.address}}<br>
+            <i class="fa fa-rupee"></i> {{program.price}}
+        </div>
+    </div>
+    <div class="details">
+        <a *ngIf="!preview" class="read_more" [routerLink]="['/programs',program.curl,program.url]"><i
+                class="fa fa-arrow-right"></i>
+            READ MORE</a>
+        <a *ngIf="preview" class="read_more"><i class="fa fa-arrow-right"></i>
+            READ MORE</a>
+        <div class="author"><img src="{{program.uploadByImg}}"> By <a href="#">{{program.uploadByName}}</a></div>
+    </div>
+    <div *ngIf="dashboard && !isMentee" class="booking">
+        <a *ngIf="!isDeleteProcess" class="delete text-danger" (click)="deleteProgram(program.id)"><i
+                class="fa fa-trash"></i> Delete</a>
+        <a *ngIf="isDeleteProcess" class="delete text-danger">loading...</a>
+        <a class="text-success" [routerLink]="['/program-booking-list',program.id]"><i class="fa fa-list"></i> Show
+            Booking</a>
+    </div>
+    <div *ngIf="dashboard && isMentee && program.currentUserTicketId==''" class="booking">
+        <span>You have requested for this program. Your confirmation is pending.</span>
+    </div>
+    <div *ngIf="dashboard && isMentee && program.currentUserTicketId!='' && !program.currentUserAttend" class="booking">
+            <span>You have already booked this program. Your ticket id is {{program.currentUserTicketId}}</span>
+        </div>
+    <div *ngIf="dashboard && isMentee && program.currentUserAttend" class="booking">
+        <a class="text-danger" (click)="downloadCertificate(program.id)"><i class="fa fa-download"></i> Download
+            Certificate</a>
+    </div>

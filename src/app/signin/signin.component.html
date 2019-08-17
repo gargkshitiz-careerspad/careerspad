@@ -1,0 +1,46 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+        <li aria-current="page" class="breadcrumb-item active">Login</li>
+    </ol>
+</nav>
+<section [style.minHeight]="wrapperHeight+'px'">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-xs-12 offset-md-3">
+                <div class="cp_login">
+                    <h2>Login</h2>
+                    <form [formGroup]="loginForm" #lF="ngForm" (ngSubmit)="!loginForm.invalid && signIn()">
+                        <div class="form-group">
+                            <input type="text" formControlName="userName" class="form-control" placeholder="Email ID"/>
+                            <div *ngIf="lF.submitted && formCtrl.userName.invalid">
+                                <div class="cp_error_msg" *ngIf="formCtrl.userName.errors.required">
+                                    Email is required.
+                                </div>
+                                <div class="cp_error_msg" *ngIf="formCtrl.userName.errors.email">
+                                    Must be a valid email.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" formControlName="password" class="form-control" placeholder="Password"/>
+                            <div *ngIf="lF.submitted && formCtrl.password.invalid">
+                                <div class="cp_error_msg" *ngIf="formCtrl.password.errors.required">
+                                    Password is required.
+                                </div>
+                            </div>
+                            <div class="cp_error_msg" *ngIf="showApiError">
+                                User Name or Password Invaliid
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" name="submit">Login</button>
+                    </form>
+                    <p>Don't have an account? <a [routerLink]="['/register']">Register
+                            Here</a><br><a [routerLink]="['/forgot-password']">Forgot
+                            Password</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,34 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+        <li aria-current="page" class="breadcrumb-item active">Mentors</li>
+    </ol>
+</nav>
+<section *ngIf="!isPageLoading">
+    <div class="container">
+        <div class="cp_page_content">
+            <h2 class="text-center">Mentors</h2>
+            <img alt="Career Mentors" src="./assets/images/Mentor_careerspad.jpg">
+            <p class="text-center">Request 1:1 Mentoring from business leaders and career experts to
+                start your mentoring relationship.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <app-page-side-bar [list]="specArr" [heading]="'Mentors By Speciality'" [click]="'/mentors'">
+                </app-page-side-bar>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div *ngFor="let mentor of mentorArr.data" class="col-md-6">
+                        <app-mentor-tile [mentor]="mentor"></app-mentor-tile>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button *ngIf="mentorArr.total>6 && mentorArr.total>mentorArr.data.length" type="button"
+                        class="loadMoreBtn" [disabled]="isLoadingMore" (click)="loadMore(mentorArr.count)">Load
+                        More</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

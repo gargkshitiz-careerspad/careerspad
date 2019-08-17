@@ -1,0 +1,131 @@
+.cp_profile_overview{
+    box-shadow: 0 0 3px #aaa;
+    margin: 20px 0;
+
+    & .cp_profile_pic{
+        position: relative;
+
+        & i{
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+            color: red;
+        }
+    }
+
+    & img{
+        width: 100%;
+        text-align: center;
+    }
+
+    & .cp_profile_summary{
+
+        & i{
+            cursor: pointer;
+            float: right;
+            margin: 5px 7px 0 0;
+        }
+        & h3{
+            margin: 10px 0 5px;
+            padding: 0;
+            color: var(--black-color);
+            font-weight: 400;
+        }
+        & p{
+            margin: 0;
+            padding: 0;
+            font-size: 13px;
+
+            & i{
+                cursor: pointer;
+                float: none;
+            }
+
+            & span{
+                background: var(--blue-color);
+                color: #fff;
+                font-size: 11px;
+                padding: 5px;
+                margin: 5px 2px;
+                display: inline-block;
+                border-radius: 5px;
+            }
+        }
+    }
+}
+
+.aboutYourself{
+    box-shadow: 0 0 2px #aaa;
+    margin: 20px 0;
+    padding: 25px;
+
+    & h3{
+        margin: 10px 0 0;
+        padding: 0;
+        font-size: 20px;
+        font-weight: 500;
+
+        & i{
+            cursor: pointer;
+        }
+    }
+
+    & p{
+        margin: 0;
+        padding: 0;
+        font-size: 15px;
+        text-align: justify;
+    }
+}
+
+.experience{
+    padding: 25px;
+    box-shadow: 0 0 3px #aaa;
+    padding-bottom: 10px;
+
+    & i{
+        float: right;
+        font-size: 20px;
+        color: var(--blue-color);
+        cursor: pointer;
+        margin-left: 5px;
+    }
+
+    & h4 {
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+    }
+
+    & .row {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+    }
+
+    & .row.last{
+        border-bottom: none;
+    }
+
+    & h5 {
+        margin: 0;
+        padding: 0;
+        font-size: 18px;
+    }
+
+    & p {
+        margin: 0;
+        padding: 0;
+        font-size: 12px;
+    }
+}
+.mt-30{
+    margin-top: 30px;
+}
+.mt-50{
+    margin-top: 50px;
+}
+.mb-30{
+    margin-bottom: 30px;
+}

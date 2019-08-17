@@ -1,0 +1,139 @@
+header{
+
+    & .cp_logo{
+
+        & img{
+            width: 100%;
+            padding-top: 10px;
+        }
+    }
+    & .navbar{
+        margin: 0 0 0 25px;
+        height: auto;
+        padding-top: 17px;
+    }
+    & .navbar-nav .nav-link{
+        color: #111;
+        font-size: 15px;
+    }
+
+    & .cp_top_menu_login{
+        text-align: right;
+        padding-top: 22px;
+    }
+    & .userTopImg{
+        width: 40px;
+        border-radius: 50px;
+    }
+    & .user-avtar{
+        background: 0 0;
+        border: 1px solid #ddd;
+        margin-top: 15px;
+        border-radius: 100px;
+    }
+}
+.navbar .navbar-toggler{
+    right: -15px;
+    position: absolute;
+    top: -50px;
+    cursor: pointer;
+}
+
+@media (max-width:1024px){
+    header{
+        & .cp_logo{
+
+            & img{
+                margin-top: 12px;
+            }            
+        }
+    }
+    
+}
+@media (max-width:991px){
+    header{
+        & .cp_logo{
+
+            & img{
+                width: 100%;
+                margin-top: 12px;
+            }
+            
+        }
+        & .navbar{
+            margin: 0;
+            height: auto;
+            padding-top: 20px;
+        }
+        & .navbar-nav .nav-link{
+            color: #111;
+            font-size: 10px;
+        }
+    }
+    
+}
+@media (max-width: 767px){
+    header{
+        & .mobi-view{
+            background: rgba(40,116,165,1);
+            order: 12;
+
+            & nav{
+                padding: 0;
+
+                & .nav-item{
+
+                    & .nav-link{
+                        color: #fff;
+                        font-size: 15px;
+                    }
+                }
+            }
+            
+        }
+        & .cp_top_menu_login{
+            font-size: 14px;
+            text-align: center;
+        }
+    }
+    
+}
+
+@media (max-width: 736px){
+    header{
+        & .cp_logo{
+
+            & img{
+                margin-top: 0;
+            }            
+        }
+        & .cp_top_menu_login{
+            margin-top: 16px;
+            margin-left: 26px;
+        }
+        .navbar .navbar-toggler{
+            right: -28px;
+            top: -55px;
+        }
+    }
+}
+
+@media (max-width: 414px){
+    header{
+        & .cp_logo{
+
+            & img{
+                margin-top: 0;
+            }
+            
+        }
+        & .cp_top_menu_login{
+            margin-top: 0px;
+            margin-left: 10px;
+        }
+        .navbar .navbar-toggler{
+            right: -15px;
+            top: -44px;
+        }
+    }
+}

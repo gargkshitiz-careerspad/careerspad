@@ -1,0 +1,38 @@
+.bannerBottom{
+    padding: 0 20px;
+    margin: 20px 0;
+    text-align: center;
+
+    & img{
+        width: 50%;
+        min-height: 155px;
+        border-radius: 100px;
+    }
+
+    & h4{
+        font-size: 19px;
+        margin: 10px 0;
+        color: var(--black-color);
+    }
+
+    & p{
+        font-size: 15px;
+        margin: 0;
+        text-align: center;
+    }
+}
+.cp_register_mentor{
+    background: #f1f1f1;
+    padding: 50px 0 40px;
+
+    & .content{
+
+        & img{
+            margin: 15px 0;
+        }
+
+        & p{
+            font-size: 16px; width: 100%; text-align: justify;
+        }
+    }
+}

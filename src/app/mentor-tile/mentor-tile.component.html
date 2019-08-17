@@ -1,0 +1,9 @@
+<div class="cp_mentor_box" [ngClass]="{'owlTile': style=='owlc'}">
+    <div><a [routerLink]="['/mentors','profile',mentor.profileUrl]"><img
+                src="{{mentor.pic}}"></a>
+    </div>
+    <h4><a [routerLink]="['/mentors','profile',mentor.profileUrl]">{{mentor.fname}} {{mentor.lname}}</a></h4>
+    <p>{{mentor.headline}}</p>
+    <div><span *ngFor="let service of mentor.services">{{service}}</span></div>
+    <div class="details"><a [routerLink]="['/mentors','profile',mentor.profileUrl]"><i class="fa fa-arrow-right"></i> READ MORE</a></div>
+</div>

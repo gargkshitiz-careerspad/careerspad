@@ -1,0 +1,44 @@
+.mentoringRequest{
+    box-shadow: 0 0 2px #ccc;
+    padding: 0;
+    margin: 15px 0;   
+
+    & ul {
+        margin: 0;
+        padding: 0;
+
+        & li{
+            margin: 0;
+            padding: 15px;
+            list-style: none;
+            border-bottom: 1px solid #eee;
+
+            & img{
+                width: 60px;
+                height: 60px;
+                border-radius: 50px;
+                display: inline-block;
+            }
+            & span{
+                display: inline-block;
+                margin-left: 15px;
+                vertical-align: middle;
+
+                & a{
+                    color: #252525;
+                }
+                & a.chat{
+                    color: #009baa;
+                    font-size: 12px;
+                }
+                & a.rmve{
+                    color: #cd2017;
+                    font-size: 12px;
+                }
+            }
+        }
+        & li:last-child{
+            border-bottom: none;
+        }
+    }
+}
